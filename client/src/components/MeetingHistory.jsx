@@ -11,7 +11,7 @@ const MeetingHistory = ({ meetings, onDeleteMeeting, onClearAll }) => {
     const matchesSearch = m.agenda.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = filterCategory === 'All' || m.costCategory === filterCategory;
     return matchesSearch && matchesCategory;
-  }).sort((a, b) => new Date(b.date) - new Date(a.date));
+  }).sort((a, b) => new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date));
 
   return (
     <div style={{ marginTop: '3rem' }}>
@@ -49,7 +49,7 @@ const MeetingHistory = ({ meetings, onDeleteMeeting, onClearAll }) => {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
             {filteredMeetings.length > 0 ? (
               filteredMeetings.map(meeting => (
-                <MeetingCard key={meeting.id} meeting={meeting} onDelete={onDeleteMeeting} />
+                <MeetingCard key={meeting._id || meeting.id} meeting={meeting} onDelete={onDeleteMeeting} />
               ))
             ) : (
               <div className="empty-state glass-panel" style={{ gridColumn: '1 / -1' }}>

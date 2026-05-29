@@ -2,7 +2,7 @@ import React from 'react';
 import { Calendar, Users, Clock, Trash2, FileText, DollarSign } from 'lucide-react';
 
 const MeetingCard = ({ meeting, onDelete }) => {
-  const formattedDate = new Date(meeting.date).toLocaleDateString('en-US', {
+  const formattedDate = new Date(meeting.createdAt || meeting.date).toLocaleDateString('en-US', {
     year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
   });
 
@@ -26,7 +26,7 @@ const MeetingCard = ({ meeting, onDelete }) => {
         <button 
           onClick={() => {
             if (window.confirm('Are you sure you want to delete this saved meeting?')) {
-              onDelete(meeting.id);
+              onDelete(meeting._id || meeting.id);
             }
           }}
           className="btn-icon"
